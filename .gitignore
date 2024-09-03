@@ -1,21 +1,11 @@
-node_modules
-
-# Output
-.output
-.vercel
-/.svelte-kit
-/build
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Env
 .env
-.env.*
-!.env.example
-!.env.test
-
-# Vite
+.output
+.svelte-kit
+.vercel
+build
+node_modules
+src/lib/db/lancedb/*.lance
+Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*

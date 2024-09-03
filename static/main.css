@@ -1,0 +1,40 @@
+:root {
+  --color-black: #000000;
+  --color-jasper: #DB504A;
+  --color-sunset: #F0CEA0;
+  --color-verdigris: #48A9A6;
+  --font-sans: "Source Sans Pro";
+  --font-serif: "Cormorant Garamond";
+  --unit: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background-color: var(--color-jasper);
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+h1, h2, h3, h4, h5, p {
+  font-family: var(--font-serif);
+  font-size: var(--unit);
+  font-variant-ligatures: discretionary-ligatures;
+  line-height: 1;
+}
+
+.markdown p {
+  font-family: var(--font-serif);
+  font-size: var(--unit);
+  line-height: 1.5;
+  margin-bottom: calc(var(--unit) * 1.5);
+}
+
+.markdown p:last-child {
+  margin-bottom: 0;
+}
+
