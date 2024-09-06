@@ -3,6 +3,7 @@
   --color-jasper: #DB504A;
   --color-sunset: #F0CEA0;
   --color-verdigris: #48A9A6;
+  --font-display: "Departure Mono";
   --font-sans: "Source Sans Pro";
   --font-serif: "Cormorant Garamond";
   --unit: 16px;
@@ -15,7 +16,6 @@
 
 html,
 body {
-  background-color: var(--color-jasper);
   min-height: 100vh;
   min-width: 100vw;
 }
@@ -27,14 +27,33 @@ h1, h2, h3, h4, h5, p {
   line-height: 1;
 }
 
-.markdown p {
-  font-family: var(--font-serif);
+.markdown ul {
+  margin-bottom: var(--unit);
+}
+
+.markdown ul:last-child {
+  margin-bottom: var(--unit);
+}
+
+.markdown li {
+  font-family: var(--font-sans);
   font-size: var(--unit);
-  line-height: 1.5;
-  margin-bottom: calc(var(--unit) * 1.5);
+  line-height: calc(var(--unit) * 1.5);
+  margin-left: var(--unit);
+  padding-left: var(--unit);
+}
+
+.markdown p {
+  font-family: var(--font-sans);
+  font-size: var(--unit);
+  line-height: calc(var(--unit) * 1.5);
+  margin-bottom: var(--unit);
 }
 
 .markdown p:last-child {
   margin-bottom: 0;
 }
 
+.clear {
+  clear: both;
+}

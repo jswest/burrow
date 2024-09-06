@@ -10,21 +10,28 @@ export async function chunkText({ text }) {
   const words = text.split(/\s+/);
   let chunk = [];
   let index = 0;
-  for (const word of words) {
-    if (chunk.join(" ").length > 500) {
-      chunks.push({
-        body: chunk.join(" "),
-        chunk_index: index,
-      });
-      chunk = [];
-      index++;
+  for (let i = 0; i < words.length; i++) {
+    if (i % 100 === 0) {
+      for (const word of words.slice(i)) {
+        if (chunk.join(" ").length > 1000) {
+          chunks.push({
+            body: chunk.join(" "),
+            chunk_index: index,
+          });
+          chunk = [];
+          index++;
+          break;
+        }
+        chunk.push(word);
+      }
     }
-    chunk.push(word);
   }
-  chunks.push({
-    body: chunk.join(" "),
-    chunk_index: index,
-  });
+  if (chunk.length > 0) {
+    chunks.push({
+      body: chunk.join(" "),
+      chunk_index: index,
+    });
+  }
   logger.info(`Chunked text into ${chunks.length} chunks`);
   return chunks;
 }
@@ -32,10 +39,10 @@ export async function chunkText({ text }) {
 export async function createChunk({
   artifactId,
   body,
-  chunkIndex,
+  chunk_index,
   summaryId,
 }) {
-  logger.info(`Creating chunk with index: ${chunkIndex}`);
+  logger.info(`Creating chunk with index: ${chunk_index}`);
   const db = await lancedb;
   const id = nanoid();
   const vector = await embed(body);
@@ -45,7 +52,7 @@ export async function createChunk({
       id,
       created_at: Date.now(),
       body,
-      chunk_index: chunkIndex,
+      chunk_index: chunk_index,
       vector,
       artifact_id: artifactId,
       summary_id: summaryId,

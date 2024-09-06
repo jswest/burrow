@@ -13,7 +13,6 @@ export async function createSummary({ artifactId }) {
     .query()
     .where(`id = '${artifactId}'`)
     .toArray();
-  console.log(artifact);
   const summariesTable = await db.openTable("summaries");
   const body = (
     await prompt(
@@ -27,7 +26,7 @@ export async function createSummary({ artifactId }) {
     await prompt(
       `Give a short summary (max one sentence) for the following content, and only output the short summary without any additional text.\n\n${artifact.body}`
     )
-  ).replace("Here is a one-sentence summary:\n\n", "").split('\n')[0];
+  )
   await summariesTable.add([
     {
       id,

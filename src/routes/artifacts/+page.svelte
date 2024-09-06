@@ -16,9 +16,11 @@
 <div class="Page">
   {#if artifacts}
     {#each artifacts as artifact}
-      <div class="artifact-card-wrapper">
-        <ArtifactCard {artifact} />
-      </div>
+      {#if artifact.summaries.length > 0}
+        <div class="artifact-card-wrapper">
+          <ArtifactCard {artifact} />
+        </div>
+      {/if}
     {/each}
   {/if}
 </div>
@@ -27,9 +29,10 @@
   .Page {
     box-sizing: border-box;
     padding: var(--unit);
-    width: 800px;
+    width: 1200px;
   }
   .artifact-card-wrapper {
+    float: left;
     margin-bottom: var(--unit);
     margin-right: var(--unit);
   }

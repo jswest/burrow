@@ -1,77 +1,96 @@
 <script>
   import { marked } from "marked";
 
-  let response;
+  import ArtifactCard from "$lib/components/ArtifactCard.svelte";
+
+  let artifacts = [];
+  let response = null;
   let query = "";
 
   async function handleQuery() {
+    artifacts = [];
+    response = null;
     const res = await fetch(`api/rag/?query=${query}`);
-    response = await res.json();
-    console.log(response);
+    const data = await res.json();
+    artifacts = [...data.artifacts];
+    response = data.response;
   }
 </script>
 
-<div class="Page">
-  <header>
-    <h1>Burrow.</h1>
-    <h2>Dig into what matters.</h2>
-  </header>
-  <div class="faux-form">
-    <div class="field">
-      <p class="helper">Query documents</p>
-      <input bind:value={query} type="text" />
-    </div>
-    <div class="field">
-      <button on:click={handleQuery}>Search</button>
+<header class="primary">
+  <h1>Burrow.</h1>
+</header>
+<section class="faux-form-wrapper">
+  <div class="box faux-form">
+    <header>
+      <h1>Query documents</h1>
+    </header>
+    <div class="guts">
+      <div class="field">
+        <input bind:value={query} type="text" />
+      </div>
+      <div class="field">
+        <button on:click={handleQuery}>Search</button>
+      </div>
     </div>
   </div>
-  {#if response}
-    <div class="response-wrapper">
-      <h1>A.I. response</h1>
-      <div class="markdown response">{@html marked(response)}</div>
+</section>
+{#if response}
+  <section class="response-wrapper">
+    <div class="box response">
+      <header>
+        <h1>A.I. response</h1>
+      </header>
+      <div class="guts markdown">
+        {@html marked(response)}
+      </div>
     </div>
-  {/if}
-</div>
+    <div class="artifacts">
+      {#each artifacts as artifact}
+        <div class="artifact-card-wrapper">
+          <ArtifactCard {artifact} />
+        </div>
+      {/each}
+    </div>
+    <div class="clear" />
+  </section>
+{/if}
 
 <style>
-  .Page {
+  header.primary {
+    background-color: var(--color-jasper);
+    border-bottom: calc(var(--unit) * 0.25) solid var(--color-sunset);
     box-sizing: border-box;
+    margin-bottom: calc(var(--unit) * 1);
     padding: var(--unit);
-    width: 800px;
+    width: 100vw;
   }
-  header {
-    margin-bottom: calc(var(--unit) * 3);
-  }
-  header h1 {
+  header.primary h1 {
     color: var(--color-sunset);
+    font-family: var(--font-display);
     font-size: calc(var(--unit) * 8);
     font-weight: 800;
   }
-  header h2 {
-    color: var(--color-sunset);
-    font-family: var(--font-sans);
-    font-size: calc(var(--unit) * 3);
-    font-weight: 100;
+  .faux-form-wrapper {
+    box-sizing: border-box;
+    padding: var(--unit);
+    width: calc((var(--unit) * 5) + 960px);
+  }
+  .faux-form {
+    background-color: var(--color-sunset);
+    box-sizing: border-box;
   }
   .field {
     margin-bottom: var(--unit);
     width: 100%;
   }
-  .field .helper {
-    color: var(--color-sunset);
-    font-family: var(--font-sans);
-    font-size: calc(var(--unit) * 0.75);
-    font-weight: 800;
-    letter-spacing: calc(var(--unit) * 0.75 * 0.1);
-    margin-bottom: calc(var(--unit) * 0.25);
-    text-transform: uppercase;
-  }
   input {
-    background-color: var(--color-sunset);
+    background-color: white;
     border: none;
+    border: 1px solid var(--color-jasper);
     box-sizing: border-box;
     color: var(--color-black);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-size: calc(var(--unit) * 2);
     height: calc(var(--unit) * 4);
     outline: none;
@@ -79,10 +98,10 @@
     width: 100%;
   }
   button {
-    background-color: var(--color-sunset);
-    border: none;
+    background-color: var(--color-jasper);
+    border: 1px solid var(--color-jasper);
     box-sizing: border-box;
-    color: var(--color-black);
+    color: var(--color-sunset);
     cursor: pointer;
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
@@ -94,18 +113,39 @@
     text-transform: uppercase;
     width: calc(50% - (var(--unit) * 0.5));
   }
-  .response-wrapper h1 {
+  .response-wrapper {
+    box-sizing: border-box;
+    padding: var(--unit);
+    width: calc((var(--unit) * 5) + 960px);
+  }
+  .response-wrapper .artifacts .artifact-card-wrapper {
+    float: left;
+    margin-bottom: var(--unit);
+    margin-right: var(--unit);
+  }
+  .response-wrapper .response {
+    border: 1px solid var(--color-sunset);
+    margin-bottom: var(--unit);
+  }
+  .box .guts,
+  .response-wrapper .response .guts {
+    background-color: var(--color-sunset);
+    padding: var(--unit);
+  }
+  .box header,
+  .response-wrapper .response header {
+    background-color: var(--color-jasper);
+    box-sizing: border-box;
+    height: calc(var(--unit) * 2);
+    padding: calc(var(--unit) * 0.625) calc(var(--unit) * 0.5);
+  }
+  .box header h1,
+  .response-wrapper .response header h1 {
     color: var(--color-sunset);
     font-family: var(--font-sans);
     font-size: calc(var(--unit) * 0.75);
     font-weight: 800;
     letter-spacing: calc(var(--unit) * 0.75 * 0.1);
-    margin-bottom: calc(var(--unit) * 0.25);
-    margin-top: calc(var(--unit) * 3);
     text-transform: uppercase;
-  }
-  .response {
-    background-color: var(--color-sunset);
-    padding: var(--unit);
   }
 </style>

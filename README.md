@@ -2,11 +2,33 @@
 
 ----
 
-### The data structures
+## Installation
 
-Using LanceDB, I anticipate there being these four tables:
+First, [download](https://ollama.com/download) and install `Ollama`.
 
-- *Artifacts* are the base unit of this system, representing a PDF document, an HTML website, a Markdown or plain-text file, or a user-generated Markdown note.
-- *Summaries* are A.I.-generated blocks of text for each Artifact, which summarize it—as the name suggests.
-- *Chunks* are the 400-character chunks (split at the nearest last word before 500 characters) of text representing, rolling every 200 characters, representing every Artifact or Summary. Each has an embedding.
-- *Tags* are plaintext tags that a user can assign to each Artifact.
+Then, run these commands:
+
+```bash
+# The various Python packages.
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# The node stuff.
+nvm install 20 # If you haven't already.
+nvm use 20
+npm install
+
+# Other install steps.
+ollama create summarizer -f ./Modelfile
+```
+
+## Setup
+
+Run this command:
+
+```bash
+node scripts/create-db.js
+source .venv/bin/activate # If you haven't already.
+python scripts/pdfloader.py path/to/pdf/directory
+```
