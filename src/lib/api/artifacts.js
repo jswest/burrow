@@ -7,13 +7,6 @@ export async function createArtifact({ body, dek, hed, path, url }) {
   logger.info(`Creating artifact with path: ${path}`);
   const db = await lancedb;
   const artifactsTable = await db.openTable("artifacts");
-  const [extant] = await artifactsTable.query().where(`path = '${path}'`).toArray();
-  if (extant) {
-    logger.info(
-      `Artfact with path ${path} already exists with id ${extant.id}`
-    );
-    return false;
-  }
   const id = nanoid();
   await artifactsTable.add([
     {

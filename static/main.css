@@ -4,7 +4,7 @@
   --color-sunset: #F0CEA0;
   --color-verdigris: #48A9A6;
   --font-display: "Departure Mono";
-  --font-sans: "Source Sans Pro";
+  --font-sans: "Source Sans 3";
   --font-serif: "Cormorant Garamond";
   --unit: 16px;
 }
@@ -27,7 +27,8 @@ h1, h2, h3, h4, h5, p {
   line-height: 1;
 }
 
-.markdown ul {
+.markdown ul,
+.markdown ol {
   margin-bottom: var(--unit);
 }
 
@@ -48,6 +49,11 @@ h1, h2, h3, h4, h5, p {
   font-size: var(--unit);
   line-height: calc(var(--unit) * 1.5);
   margin-bottom: var(--unit);
+}
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  font-size: calc(var(--unit) * 2);
 }
 
 .markdown p:last-child {

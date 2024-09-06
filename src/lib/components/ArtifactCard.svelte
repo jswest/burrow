@@ -10,7 +10,8 @@
       <p class="metadata-field id-field">{artifact.type}-{id}</p>
     </header>
     <div class="guts">
-      <h1 class="hed-field">{summary.hed.replaceAll('"', '')}</h1>
+      <h1 class="hed-field">
+        <a href="/artifacts/{id}">{summary.hed.replaceAll('"', '')}</a></h1>
       <p class="dek-field">{summary.dek}</p>
     </div>
   </div>
@@ -47,6 +48,9 @@
     font-weight: 800;
     margin-bottom: calc(var(--unit) * 0.25);
     margin-top: calc(var(--unit) * 0.25);
+  }
+  .hed-field a {
+    color: inherit;
   }
   .dek-field {
     font-family: var(--font-sans);

@@ -6,14 +6,17 @@
   let artifacts = [];
   let response = null;
   let query = "";
+  let working = false;
 
   async function handleQuery() {
+    working = true;
     artifacts = [];
     response = null;
     const res = await fetch(`api/rag/?query=${query}`);
     const data = await res.json();
     artifacts = [...data.artifacts];
     response = data.response;
+    working = false;
   }
 </script>
 
@@ -29,9 +32,11 @@
       <div class="field">
         <input bind:value={query} type="text" />
       </div>
+      {#if !working}
       <div class="field">
         <button on:click={handleQuery}>Search</button>
       </div>
+      {/if}
     </div>
   </div>
 </section>
