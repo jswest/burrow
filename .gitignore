@@ -9,6 +9,7 @@ db/lancedb/*
 node_modules
 src/lib/db/lancedb/*.lance
 temp/markdown/*
+temp/*.pdf
 Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*

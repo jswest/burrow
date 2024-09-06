@@ -19,6 +19,6 @@ if __name__ == "__main__":
                     paths.append(os.path.join(root, file))
         
         for path in tqdm(paths):
-            subprocess.run(["marker_single" ,f"'{path}'", "./temp/markdown"])
-            slug = path.split('/')[-1].replace('.pdf', '')
-            subprocess.run(["node", "./scripts/create-artifact.js", f"--path='./temp/markdown/{slug}/{slug}.md'"])
+            subprocess.run(f"cp '{path}' ./temp/temp.pdf", shell=True)
+            subprocess.run(["marker_single" ,"./temp/temp.pdf", "./temp/markdown"])
+            subprocess.run(["node", "./scripts/create-artifact.js", f"--path='./temp/markdown/temp/temp.md'"])

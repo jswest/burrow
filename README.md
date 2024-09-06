@@ -25,10 +25,12 @@ ollama create summarizer -f ./Modelfile
 
 ## Setup
 
-Run this command:
+Run these commands:
 
 ```bash
 node scripts/create-db.js
 source .venv/bin/activate # If you haven't already.
+
+# Load PDFs from a directory, recursively.
 python scripts/pdfloader.py path/to/pdf/directory
 ```
