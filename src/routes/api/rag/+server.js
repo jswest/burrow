@@ -9,7 +9,7 @@ export async function GET({ url }) {
   const query = await url.searchParams.get("query");
   const vector = await embed(query);
   const chunksTable = await db.openTable("chunks");
-  const chunks = await chunksTable.search(vector).limit(8).toArray();
+  const chunks = await chunksTable.search(vector).limit(6).toArray();
   const artifacts = [];
   const artifactIds = [...new Set(chunks.map(({ artifact_id }) => artifact_id))];
   for (const id of artifactIds) {
@@ -25,7 +25,7 @@ export async function GET({ url }) {
   const body = `
     Below is a user query followed by relevant information retrieved from various documents.
     
-    Use this information to generate an accurate response to the query.
+    Use this information to generate an accurate and verbose essay in response to the user query.
   
     Please be as verbose as possible and provide as much context as possible. You should use multiple paragraphs and markdown.
 

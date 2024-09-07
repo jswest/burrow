@@ -53,3 +53,9 @@ python scripts/pdfloader.py path/to/pdf/directory
 # Load a single Markdown file.
 node scripts/create-artifact.js --path=path/to/file.md
 ```
+
+## Running it
+
+```bash
+npm run dev -- --open
+```
